@@ -31,10 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProfileUI(currentUser);
 
     // 2. Navigation & View Switcher
-    const sidebarMenuItems = document.querySelectorAll('.sidebar-menu .menu-item');
+    // 2. Navigation & View Switcher
+    const desktopNavItems = document.querySelectorAll('.desktop-navbar .nav-item');
     const mobileTabItems = document.querySelectorAll('.mobile-nav-bar .tab-item');
     const views = document.querySelectorAll('.dashboard-view');
     const headerTitle = document.getElementById('header-title');
+    const headerProfileBtn = document.getElementById('header-profile-btn');
 
     const viewTitles = {
         'home': 'Mening Mahsulotlarim',
@@ -45,14 +47,23 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function switchTab(tabId) {
-        // Update sidebar menu items active class
-        sidebarMenuItems.forEach(item => {
+        // Update desktop navbar items active class
+        desktopNavItems.forEach(item => {
             if (item.getAttribute('data-tab') === tabId) {
                 item.classList.add('active');
             } else {
                 item.classList.remove('active');
             }
         });
+
+        // Update profile icon button active class
+        if (headerProfileBtn) {
+            if (tabId === 'profile') {
+                headerProfileBtn.classList.add('active');
+            } else {
+                headerProfileBtn.classList.remove('active');
+            }
+        }
 
         // Update mobile nav bar items active class
         mobileTabItems.forEach(item => {
@@ -78,13 +89,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Set up click handlers for desktop sidebar navigation
-    sidebarMenuItems.forEach(item => {
+    // Set up click handlers for desktop top navbar navigation
+    desktopNavItems.forEach(item => {
         item.addEventListener('click', () => {
             const tabId = item.getAttribute('data-tab');
             switchTab(tabId);
         });
     });
+
+    // Set up click handler for desktop profile icon button
+    if (headerProfileBtn) {
+        headerProfileBtn.addEventListener('click', () => {
+            switchTab('profile');
+        });
+    }
 
     // Set up click handlers for mobile bottom navigation bar
     mobileTabItems.forEach(item => {
@@ -435,16 +453,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 8. Logged-in User Profile UI Sync
+    // 8. Logged-in User Profile UI Sync
     function updateProfileUI(user) {
-        // Sidebar profile panel
-        const sidebarName = document.getElementById('sidebar-user-name');
-        const sidebarRole = document.getElementById('sidebar-user-role');
-        const sidebarAvatar = document.getElementById('sidebar-user-avatar');
+        // Header Profile Icon Avatar
+        const headerAvatar = document.getElementById('header-user-avatar');
+        if (headerAvatar) {
+            headerAvatar.src = 'images/farmer_avatar.png';
+        }
+
+        // Profile footer panel (moved from sidebar)
+        const footerName = document.getElementById('profile-footer-name');
+        const footerRole = document.getElementById('profile-footer-role');
+        const footerAvatar = document.getElementById('profile-footer-avatar');
         
-        if (sidebarName) sidebarName.textContent = user.fullName;
-        if (sidebarRole) sidebarRole.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
-        if (sidebarAvatar && user.role === 'fermer') {
-            sidebarAvatar.src = 'images/farmer_avatar.png';
+        if (footerName) footerName.textContent = user.fullName;
+        if (footerRole) footerRole.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+        if (footerAvatar) {
+            footerAvatar.src = 'images/farmer_avatar.png';
         }
 
         // Profile view panel
@@ -462,8 +487,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (profileExperience) {
             profileExperience.textContent = user.experience !== null ? user.experience : '-';
         }
-        if (profileAvatar && user.role === 'fermer') {
+        if (profileAvatar) {
             profileAvatar.src = 'images/farmer_avatar.png';
+        }
+
+        // Cart button visibility depending on role: haridor or sotuvchi
+        const cartBtn = document.getElementById('header-cart-btn');
+        if (cartBtn) {
+            if (user.role === 'haridor' || user.role === 'sotuvchi') {
+                cartBtn.style.display = 'flex';
+            } else {
+                cartBtn.style.display = 'none';
+            }
         }
     }
 
@@ -476,14 +511,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    const sidebarSignoutBtn = document.getElementById('sidebar-signout-btn');
-    if (sidebarSignoutBtn) {
-        sidebarSignoutBtn.addEventListener('click', handleSignout);
+    const profileSignoutBtn = document.getElementById('profile-signout-btn');
+    if (profileSignoutBtn) {
+        profileSignoutBtn.addEventListener('click', handleSignout);
     }
 
-    const mobileSignoutBtn = document.getElementById('mobile-signout-btn');
-    if (mobileSignoutBtn) {
-        mobileSignoutBtn.addEventListener('click', handleSignout);
+    // Cart button simulation and seller check
+    const headerCartBtn = document.getElementById('header-cart-btn');
+    if (headerCartBtn) {
+        headerCartBtn.addEventListener('click', () => {
+            const user = JSON.parse(localStorage.getItem('dehqon_currentUser')) || currentUser;
+            if (user.role === 'sotuvchi') {
+                showToast("Bu funksiya faqat haridorlar uchun!", "error");
+            } else if (user.role === 'haridor') {
+                showToast("Savatda 3 ta mahsulot bor.", "success");
+            }
+        });
     }
 
     // 10. Click notification bell simulation
