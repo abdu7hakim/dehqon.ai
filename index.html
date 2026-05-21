@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dehqon AI - Bosh Sahifa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 1. Sidebar Navigation (Desktop & Tablet) -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-wrapper">
+                    <!-- Tractor SVG -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="17.5" cy="16.5" r="4.5" />
+                        <circle cx="17.5" cy="16.5" r="1.5" />
+                        <circle cx="6" cy="18" r="3" />
+                        <circle cx="6" cy="18" r="1" />
+                        <path d="M6 15h7.5V9.5H9.5V11H6Z" />
+                        <path d="M13.5 15H17.5V7.5H12v3.5" />
+                        <path d="M12 11h5.5" />
+                        <path d="M8.5 9.5V5.5h1" />
+                    </svg>
+                </div>
+                <h2 class="sidebar-title">Dehqon</h2>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="menu-item active" data-tab="home">
+                    <div class="menu-item-icon">
+                        <!-- Grid SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                        </svg>
+                    </div>
+                    <span class="menu-item-label">Home</span>
+                </li>
+                <li class="menu-item" data-tab="market">
+                    <div class="menu-item-icon">
+                        <!-- Shopping Basket SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <path d="M16 10a4 4 0 0 1-8 0" />
+                        </svg>
+                    </div>
+                    <span class="menu-item-label">Market</span>
+                </li>
+                <li class="menu-item" data-tab="prices">
+                    <div class="menu-item-icon">
+                        <!-- Line Chart SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10" />
+                            <line x1="12" y1="20" x2="12" y2="4" />
+                            <line x1="6" y1="20" x2="6" y2="14" />
+                        </svg>
+                    </div>
+                    <span class="menu-item-label">Prices</span>
+                </li>
+                <li class="menu-item" data-tab="logistics">
+                    <div class="menu-item-icon">
+                        <!-- Truck SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13" rx="2" ry="2" />
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                            <circle cx="5.5" cy="18.5" r="2.5" />
+                            <circle cx="18.5" cy="18.5" r="2.5" />
+                        </svg>
+                    </div>
+                    <span class="menu-item-label">Logistics</span>
+                </li>
+                <li class="menu-item" data-tab="profile">
+                    <div class="menu-item-icon">
+                        <!-- User SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <span class="menu-item-label">Profile</span>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-profile-preview">
+                    <img id="sidebar-user-avatar" src="images/farmer_avatar.png" alt="Avatar" class="user-avatar-mini">
+                    <div class="user-info-mini">
+                        <span id="sidebar-user-name" class="user-name-mini">Rustam Karimov</span>
+                        <span id="sidebar-user-role" class="user-role-mini">Fermer</span>
+                    </div>
+                </div>
+                <div class="btn-signout" id="sidebar-signout-btn">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                    <span>Chiqish</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 2. Main content section -->
+        <main class="dashboard-main">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <div class="mobile-logo-trigger">
+                        <!-- Mobile Tractor Logo -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="17.5" cy="16.5" r="4.5" />
+                            <circle cx="6" cy="18" r="3" />
+                            <path d="M6 15h7.5V9.5H9.5V11H6Z" />
+                            <path d="M13.5 15H17.5V7.5H12v3.5" />
+                            <path d="M12 11h5.5" />
+                        </svg>
+                    </div>
+                    <h1 class="header-page-title" id="header-title">Mening Mahsulotlarim</h1>
+                </div>
+                <div class="header-right">
+                    <div class="notification-bell" id="notification-bell-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                        <span class="bell-badge">2</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Scrollable views wrapper -->
+            <div class="view-container">
+
+                <!-- VIEW A: Home View -->
+                <div class="dashboard-view active" id="home-view">
+                    <!-- Mahsulotlar title section -->
+                    <div>
+                        <div class="section-header">
+                            <div>
+                                <h2 class="section-title">Mening Mahsulotlarim</h2>
+                                <p class="section-subtitle">Barcha ekilgan ekinlar</p>
+                            </div>
+                            <div class="floating-add-btn" id="open-add-product-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic crop cards list -->
+                        <div class="products-grid" id="crop-cards-container">
+                            <!-- Tomato Card -->
+                            <div class="product-card">
+                                <div class="product-card-top">
+                                    <div class="product-img-wrapper">
+                                        <img src="images/tomatoes.png" alt="Tomatoes" class="product-img">
+                                    </div>
+                                    <span class="trend-badge up">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="18 15 12 9 6 15"/></svg>
+                                        12%
+                                    </span>
+                                </div>
+                                <h3 class="product-title">Pomidor</h3>
+                                <span class="product-price">4,500 UZS/kg</span>
+                                <span class="product-quantity">Hajm: 2.5 tonna</span>
+                            </div>
+
+                            <!-- Potato Card -->
+                            <div class="product-card">
+                                <div class="product-card-top">
+                                    <div class="product-img-wrapper">
+                                        <img src="images/potatoes.png" alt="Potatoes" class="product-img">
+                                    </div>
+                                    <span class="trend-badge down">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+                                        3%
+                                    </span>
+                                </div>
+                                <h3 class="product-title">Kartoshka</h3>
+                                <span class="product-price">3,200 UZS/kg</span>
+                                <span class="product-quantity">Hajm: 5 tonna</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bozor Narxlari -->
+                    <div class="bozor-card">
+                        <div class="bozor-header">
+                            <h3 class="bozor-title">Bozor Narxlari</h3>
+                            <a href="#" class="detail-link" id="home-prices-link">
+                                <span>Batafsil</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                            </a>
+                        </div>
+                        <div class="chart-wrapper">
+                            <!-- Custom green trend curve SVG -->
+                            <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#10b981" stop-opacity="0.3" />
+                                        <stop offset="100%" stop-color="#10b981" stop-opacity="0.0" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Grid line fallback -->
+                                <line x1="0" y1="130" x2="500" y2="130" stroke="#f1f5f9" stroke-width="1" />
+                                <line x1="0" y1="75" x2="500" y2="75" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="4" />
+                                <!-- The curve path -->
+                                <path d="M 0 110 Q 75 60 150 90 T 300 100 T 400 40 T 500 65" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="round" />
+                                <!-- Filled area below curve -->
+                                <path d="M 0 110 Q 75 60 150 90 T 300 100 T 400 40 T 500 65 L 500 130 L 0 130 Z" fill="url(#chart-grad)" />
+                                <!-- Points of interest -->
+                                <circle cx="400" cy="40" r="5" fill="#10b981" />
+                            </svg>
+                            <div class="chart-x-labels">
+                                <span>Dush</span>
+                                <span>Sesh</span>
+                                <span>Chor</span>
+                                <span>Pay</span>
+                                <span>Jum</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Suggestion Banner -->
+                    <div class="ai-banner-card">
+                        <div class="ai-content">
+                            <div class="ai-icon-circle">
+                                <!-- Sparkles/AI Brain SVG -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                                    <circle cx="12" cy="12" r="4" />
+                                </svg>
+                            </div>
+                            <div class="ai-text-wrapper">
+                                <div class="ai-label-pill">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                    SUN'IY INTELLEKT
+                                </div>
+                                <h3 class="ai-banner-title">Nima ekish kerak?</h3>
+                                <p class="ai-banner-desc">Joriy bozor tahlili va tuproq namligiga ko'ra, keyingi mavsumda <strong>Piyoz</strong> ekish eng yuqori daromad keltiradi.</p>
+                            </div>
+                        </div>
+                        <button class="btn-secondary" id="ai-banner-action-btn">
+                            <span>Tahlilni ko'rish</span>
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- VIEW B: Market View -->
+                <div class="dashboard-view" id="market-view">
+                    <!-- Search & Filter bar -->
+                    <div class="market-search-bar">
+                        <div class="search-input-wrapper">
+                            <span class="search-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            </span>
+                            <input type="text" class="search-input" placeholder="Mahsulotlarni qidirish...">
+                        </div>
+                        <button class="btn-filter">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="4" y1="21" x2="4" y2="14" />
+                                <line x1="4" y1="10" x2="4" y2="3" />
+                                <line x1="12" y1="21" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12" y2="3" />
+                                <line x1="20" y1="21" x2="20" y2="16" />
+                                <line x1="20" y1="12" x2="20" y2="3" />
+                                <line x1="1" y1="14" x2="7" y2="14" />
+                                <line x1="9" y1="8" x2="15" y2="8" />
+                                <line x1="17" y1="16" x2="23" y2="16" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Category scroll pills -->
+                    <div class="categories-scroll">
+                        <span class="category-pill active">Barchasi</span>
+                        <span class="category-pill">Sabzavotlar</span>
+                        <span class="category-pill">Mevalar</span>
+                        <span class="category-pill">Poliz ekinlari</span>
+                        <span class="category-pill">Donlar</span>
+                    </div>
+
+                    <!-- Market Cards List -->
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <h2 class="section-title">Dalaning o'zidan <span style="color: var(--primary); font-size: 15px; font-weight: 500; display: block; margin-top: 4px;">Available from Field</span></h2>
+                        
+                        <div class="products-grid">
+                            <!-- Market item 1 -->
+                            <div class="market-card">
+                                <div class="market-card-img-wrapper">
+                                    <img src="images/potatoes.png" alt="Premium Potatoes" class="market-card-img">
+                                    <span class="card-tag verified">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                        Verified Farm
+                                    </span>
+                                    <span class="card-tag preorder">Pre-order</span>
+                                </div>
+                                <div class="market-card-content">
+                                    <div class="market-card-header">
+                                        <h3 class="market-card-title">Premium Potatoes</h3>
+                                        <div class="market-card-price">
+                                            <span class="market-price-amount">$280</span>
+                                            <span class="market-price-unit">per Ton</span>
+                                        </div>
+                                    </div>
+                                    <p class="market-card-desc">Harvesting in 3 days. High yield, perfect for bulk storage.</p>
+                                    
+                                    <div class="market-card-info-row alert">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        <span>Delivery in: 3d 14h</span>
+                                    </div>
+
+                                    <div class="market-card-actions">
+                                        <div class="counter-wrapper">
+                                            <button class="btn-counter minus-btn">-</button>
+                                            <span class="counter-value" data-val="5">5</span>
+                                            <button class="btn-counter plus-btn">+</button>
+                                        </div>
+                                        <span class="counter-unit">Tons</span>
+                                        <button class="btn-market-order" data-product="Premium Potatoes">Book Now</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Market item 2 -->
+                            <div class="market-card">
+                                <div class="market-card-img-wrapper">
+                                    <img src="images/cabbage.png" alt="Green Cabbage" class="market-card-img">
+                                </div>
+                                <div class="market-card-content">
+                                    <div class="market-card-header">
+                                        <h3 class="market-card-title">Green Cabbage</h3>
+                                        <div class="market-card-price">
+                                            <span class="market-price-amount">$150</span>
+                                            <span class="market-price-unit">per Ton</span>
+                                        </div>
+                                    </div>
+                                    <p class="market-card-desc">Ready for transport. Fresh from the field, tightly packed.</p>
+                                    
+                                    <div class="market-card-info-row">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                                        <span>Immediate Dispatch</span>
+                                    </div>
+
+                                    <div class="market-card-actions">
+                                        <div class="counter-wrapper">
+                                            <button class="btn-counter minus-btn">-</button>
+                                            <span class="counter-value" data-val="2">2</span>
+                                            <button class="btn-counter plus-btn">+</button>
+                                        </div>
+                                        <span class="counter-unit">Tons</span>
+                                        <button class="btn-market-order" data-product="Green Cabbage">Order</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW C: Prices View -->
+                <div class="dashboard-view" id="prices-view">
+                    <!-- Page sub toggles -->
+                    <div class="prices-toggle-row">
+                        <button class="prices-toggle-btn active" data-subview="analytics">AI Analytics</button>
+                        <button class="prices-toggle-btn" data-subview="live">Live Market Prices</button>
+                    </div>
+
+                    <!-- Subview C1: AI Analytics -->
+                    <div class="prices-subview active" id="prices-analytics">
+                        <!-- AI Analytics Title -->
+                        <div>
+                            <h2 class="section-title">AI Analytics</h2>
+                            <p class="section-subtitle">Market intelligence & predictive insights</p>
+                        </div>
+
+                        <!-- Recommendations Card (Tavsiya) -->
+                        <div class="analytics-tavsiya-card">
+                            <div class="tavsiya-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div class="tavsiya-content">
+                                <h4 class="tavsiya-title">Tavsiya</h4>
+                                <p class="tavsiya-text">Kelasi oyda piyoz narxi <strong>15% ga oshishi</strong> kutilmoqda.</p>
+                            </div>
+                        </div>
+
+                        <!-- Demand Heatmap -->
+                        <div class="heatmap-card">
+                            <h3 class="bozor-title">Regional Demand Heatmap</h3>
+                            <div class="heatmap-img-wrapper">
+                                <img src="images/uzbekistan_heatmap.png" alt="Uzbekistan Heatmap" class="heatmap-img">
+                            </div>
+                            <div class="heatmap-stats-grid">
+                                <div class="heatmap-stat-box">
+                                    <span class="heatmap-stat-lbl">Highest Demand</span>
+                                    <span class="heatmap-stat-val">Tashkent Reg.</span>
+                                    <span class="heatmap-stat-change up">▲ +22%</span>
+                                </div>
+                                <div class="heatmap-stat-box">
+                                    <span class="heatmap-stat-lbl">Lowest Supply</span>
+                                    <span class="heatmap-stat-val">Fergana Val.</span>
+                                    <span class="heatmap-stat-change down">▼ -8%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price Prediction -->
+                        <div class="prediction-card">
+                            <div class="prediction-header">
+                                <div>
+                                    <h3 class="bozor-title">Price Prediction (Onion)</h3>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+                                    <div class="prediction-chart-filters">
+                                        <button class="prediction-filter-btn">1M</button>
+                                        <button class="prediction-filter-btn active">3M</button>
+                                        <button class="prediction-filter-btn">6M</button>
+                                    </div>
+                                    <div class="prediction-price-display">
+                                        <span class="prediction-price-val">4,500 UZS</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Prediction chart SVG -->
+                            <div class="chart-wrapper" style="height: 160px;">
+                                <svg viewBox="0 0 500 120" preserveAspectRatio="none">
+                                    <line x1="0" y1="100" x2="500" y2="100" stroke="#e2e8f0" stroke-width="1" />
+                                    <!-- Solid Line (Historical) -->
+                                    <path d="M 0 95 Q 80 85 160 88 T 320 70" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="round" />
+                                    <!-- Dotted/Dashed Line (Prediction) -->
+                                    <path d="M 320 70 L 400 50 L 500 35" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="6,4" stroke-linecap="round" />
+                                    <!-- Prediction background shader box -->
+                                    <rect x="320" y="20" width="180" height="80" fill="#10b981" fill-opacity="0.06" rx="4" />
+                                    <!-- Node anchor points -->
+                                    <circle cx="320" cy="70" r="5" fill="#64748b" />
+                                    <circle cx="500" cy="35" r="5" fill="#10b981" />
+                                </svg>
+                                <div class="chart-x-labels">
+                                    <span>Aug</span>
+                                    <span>Sep</span>
+                                    <span style="color: var(--success); font-weight: 600;">Oct</span>
+                                    <span>Nov</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Export Opportunities -->
+                        <div class="heatmap-card">
+                            <h3 class="bozor-title">Export Opportunities</h3>
+                            <div class="export-grid">
+                                <!-- Opp 1 -->
+                                <div class="export-card">
+                                    <div class="export-flag-wrapper">
+                                        <!-- Russia flag representation (Blue, white, red horizontal stripes) -->
+                                        <svg viewBox="0 0 24 24" width="24" height="24">
+                                            <rect x="0" y="0" width="24" height="8" fill="#fff" />
+                                            <rect x="0" y="8" width="24" height="8" fill="#0039a6" />
+                                            <rect x="0" y="16" width="24" height="8" fill="#d52b1e" />
+                                        </svg>
+                                    </div>
+                                    <div class="export-info">
+                                        <span class="export-country">Russia</span>
+                                        <p class="export-desc">High demand: Apples</p>
+                                    </div>
+                                    <div class="export-margin-col">
+                                        <span class="export-margin-val">+12%</span>
+                                        <span class="export-margin-lbl">Margin</span>
+                                    </div>
+                                </div>
+                                <!-- Opp 2 -->
+                                <div class="export-card">
+                                    <div class="export-flag-wrapper">
+                                        <!-- Kazakhstan flag representation (Cyan with yellow sun) -->
+                                        <svg viewBox="0 0 24 24" width="24" height="24">
+                                            <rect x="0" y="0" width="24" height="24" fill="#00afca" />
+                                            <circle cx="12" cy="12" r="4" fill="#fec100" />
+                                        </svg>
+                                    </div>
+                                    <div class="export-info">
+                                        <span class="export-country">Kazakhstan</span>
+                                        <p class="export-desc">High demand: Grapes</p>
+                                    </div>
+                                    <div class="export-margin-col">
+                                        <span class="export-margin-val">+8%</span>
+                                        <span class="export-margin-lbl">Margin</span>
+                                    </div>
+                                </div>
+                                <!-- Opp 3 -->
+                                <div class="export-card">
+                                    <div class="export-flag-wrapper">
+                                        <!-- UAE flag representation -->
+                                        <svg viewBox="0 0 24 24" width="24" height="24">
+                                            <rect x="0" y="0" width="8" height="24" fill="#ff0000" />
+                                            <rect x="8" y="0" width="16" height="8" fill="#00732f" />
+                                            <rect x="8" y="8" width="16" height="8" fill="#ffffff" />
+                                            <rect x="8" y="16" width="16" height="8" fill="#000000" />
+                                        </svg>
+                                    </div>
+                                    <div class="export-info">
+                                        <span class="export-country">UAE</span>
+                                        <p class="export-desc">High demand: Cherries</p>
+                                    </div>
+                                    <div class="export-margin-col">
+                                        <span class="export-margin-val">+24%</span>
+                                        <span class="export-margin-lbl">Margin</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subview C2: Live Market Prices -->
+                    <div class="prices-subview" id="prices-live">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h2 class="section-title">Live Market Prices</h2>
+                            </div>
+                            <span class="live-badge">
+                                <span class="live-dot"></span>
+                                Live
+                            </span>
+                        </div>
+
+                        <!-- Search and filter -->
+                        <div class="market-search-bar">
+                            <div class="search-input-wrapper">
+                                <span class="search-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                </span>
+                                <input type="text" class="search-input" placeholder="Bozor yoki mahsulotlarni qidirish...">
+                            </div>
+                        </div>
+
+                        <!-- Category Filters -->
+                        <div class="categories-scroll">
+                            <span class="category-pill active">Barchasi</span>
+                            <span class="category-pill">Sabzavotlar</span>
+                            <span class="category-pill">Mevalar</span>
+                            <span class="category-pill">Ko'katlar</span>
+                        </div>
+
+                        <!-- Prices List -->
+                        <div style="display: flex; flex-direction: column; gap: 16px;" id="live-prices-list-container">
+                            <!-- Tomato -->
+                            <div class="price-item-card" data-crop-id="pomidor">
+                                <div class="price-item-header">
+                                    <img src="images/tomatoes.png" alt="Tomatoes" class="price-item-img">
+                                    <div class="price-item-info">
+                                        <h4 class="price-item-title">Red Tomatoes</h4>
+                                        <span class="price-item-market">Tashkent Market</span>
+                                        <span class="price-item-badge verified">VERIFIED BY ADMIN</span>
+                                    </div>
+                                    <div class="market-price-data">
+                                        <span class="market-price-lbl">Bozor narxi</span>
+                                        <div class="market-price-val">12,500 UZS</div>
+                                        <span class="market-price-trend up">▲ +2.5% bugun</span>
+                                    </div>
+                                </div>
+                                <div class="my-price-row">
+                                    <span class="my-price-lbl">Sizning narxingiz</span>
+                                    <div class="my-price-value-group">
+                                        <span class="my-price-val" id="my-price-pomidor">12,000 UZS</span>
+                                        <button class="btn-edit-price" data-crop="pomidor">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+                                                <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Potato -->
+                            <div class="price-item-card" data-crop-id="kartoshka">
+                                <div class="price-item-header">
+                                    <img src="images/potatoes.png" alt="Potatoes" class="price-item-img">
+                                    <div class="price-item-info">
+                                        <h4 class="price-item-title">Potatoes</h4>
+                                        <span class="price-item-market">Samarkand Market</span>
+                                        <span class="price-item-badge verified">VERIFIED BY ADMIN</span>
+                                    </div>
+                                    <div class="market-price-data">
+                                        <span class="market-price-lbl">Bozor narxi</span>
+                                        <div class="market-price-val">4,200 UZS</div>
+                                        <span class="market-price-trend down">▼ -1.2% bugun</span>
+                                    </div>
+                                </div>
+                                <div class="my-price-row">
+                                    <span class="my-price-lbl">Sizning narxingiz</span>
+                                    <div class="my-price-value-group">
+                                        <span class="my-price-val" id="my-price-kartoshka">4,500 UZS</span>
+                                        <button class="btn-edit-price" data-crop="kartoshka">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+                                                <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Apples -->
+                            <div class="price-item-card" data-crop-id="olma">
+                                <div class="price-item-header">
+                                    <img src="images/cabbage.png" alt="Apples" class="price-item-img"> <!-- placeholder / fallback -->
+                                    <div class="price-item-info">
+                                        <h4 class="price-item-title">Apples (Fuji)</h4>
+                                        <span class="price-item-market">Fergana Market</span>
+                                        <span class="price-item-badge pending">PENDING VERIFICATION</span>
+                                    </div>
+                                    <div class="market-price-data">
+                                        <span class="market-price-lbl">Bozor narxi</span>
+                                        <div class="market-price-val">18,000 UZS</div>
+                                        <span class="market-price-trend up">▲ +0.5% bugun</span>
+                                    </div>
+                                </div>
+                                <div class="my-price-row">
+                                    <span class="my-price-lbl">Sizning narxingiz</span>
+                                    <div class="my-price-value-group">
+                                        <span class="my-price-val" id="my-price-olma" style="color: var(--text-muted); font-weight: normal;">O'rnatilmagan</span>
+                                        <button class="btn-add-price" data-crop="olma">Add Price</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW D: Logistics View -->
+                <div class="dashboard-view" id="logistics-view">
+                    <div>
+                        <h2 class="section-title">Active Transit</h2>
+                        <p class="section-subtitle">Shipment #TRK-8429 • En Route</p>
+                    </div>
+
+                    <!-- Progress Card -->
+                    <div class="logistics-progress-card">
+                        <div class="transit-map-wrapper">
+                            <!-- Visual path/routes SVG overlaying a stylized fields grid -->
+                            <svg viewBox="0 0 500 220" width="100%" height="100%" style="background-color: #1a2e26;">
+                                <defs>
+                                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#234235" stroke-width="1"/>
+                                    </pattern>
+                                </defs>
+                                <rect width="100%" height="100%" fill="url(#grid)" />
+                                <!-- Fields (stylized rectangles) -->
+                                <rect x="50" y="30" width="120" height="70" fill="#2d523f" opacity="0.3" rx="4" />
+                                <rect x="220" y="20" width="90" height="80" fill="#2d523f" opacity="0.4" rx="4" />
+                                <rect x="80" y="130" width="180" height="60" fill="#2d523f" opacity="0.2" rx="4" />
+                                <rect x="360" y="80" width="100%" height="110" fill="#2d523f" opacity="0.3" rx="4" />
+                                
+                                <!-- Roads lines -->
+                                <path d="M -10 120 L 520 120" stroke="#334e40" stroke-width="8" stroke-linecap="round" />
+                                <path d="M 180 -10 L 180 240" stroke="#334e40" stroke-width="8" stroke-linecap="round" />
+                                <path d="M 340 -10 L 340 240" stroke="#334e40" stroke-width="8" stroke-linecap="round" />
+                                
+                                <!-- Neon green transit route line -->
+                                <path id="route-path" d="M 100 120 L 180 120 L 180 50 L 340 50 L 340 180 L 440 180" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8,8" />
+                                
+                                <!-- Origin Dot -->
+                                <circle cx="100" cy="120" r="6" fill="#10b981" />
+                                <!-- Current location dot (Truck) -->
+                                <circle cx="260" cy="50" r="8" fill="#10b981" />
+                                <circle cx="260" cy="50" r="14" fill="none" stroke="#10b981" stroke-width="2" opacity="0.5" />
+                                <!-- Destination Dot -->
+                                <circle cx="440" cy="180" r="6" fill="#64748b" />
+                            </svg>
+                            <span class="speed-badge">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                                58 KM/H
+                            </span>
+                            <span class="eta-badge">ETA: 2H 15M</span>
+                        </div>
+
+                        <!-- Metrics row -->
+                        <div class="heatmap-stats-grid">
+                            <div class="heatmap-stat-box" style="flex-direction: row; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <span class="heatmap-stat-lbl">TEMPERATURE</span>
+                                    <span class="heatmap-stat-val" style="font-size: 24px;">4 °C</span>
+                                </div>
+                                <span style="color: var(--primary);"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></span>
+                            </div>
+                            <div class="heatmap-stat-box" style="flex-direction: row; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <span class="heatmap-stat-lbl">HUMIDITY</span>
+                                    <span class="heatmap-stat-val" style="font-size: 24px;">85 %</span>
+                                </div>
+                                <span style="color: var(--primary);"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Route progress tracker -->
+                    <div class="logistics-progress-card">
+                        <h3 class="bozor-title">Route Progress</h3>
+                        <div class="timeline-stepper">
+                            <!-- Step 1 -->
+                            <div class="timeline-step completed">
+                                <div class="timeline-node">
+                                    <div class="timeline-dot"></div>
+                                </div>
+                                <div class="timeline-step-content">
+                                    <span class="timeline-step-title">Sodiq Farm Cooperative</span>
+                                    <span class="timeline-step-desc">Departed 06:30 AM</span>
+                                </div>
+                            </div>
+                            <!-- Step 2 -->
+                            <div class="timeline-step active">
+                                <div class="timeline-node">
+                                    <!-- Truck SVG small -->
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                                </div>
+                                <div class="timeline-step-content">
+                                    <span class="timeline-step-title">Tashkent Highway (M39)</span>
+                                    <span class="timeline-step-desc">Moving • Expected 11:45 AM</span>
+                                </div>
+                            </div>
+                            <!-- Step 3 -->
+                            <div class="timeline-step">
+                                <div class="timeline-node">
+                                    <div class="timeline-dot"></div>
+                                </div>
+                                <div class="timeline-step-content">
+                                    <span class="timeline-step-title">Central Distribution Hub</span>
+                                    <span class="timeline-step-desc">Pending Arrival</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Network Partners -->
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 class="bozor-title">Network Partners</h3>
+                            <a href="#" class="detail-link">View Map</a>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div class="partner-card">
+                                <div class="partner-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                </div>
+                                <div class="partner-info">
+                                    <span class="partner-name">AgroCold Storage North</span>
+                                    <span class="partner-distance">12 km</span>
+                                </div>
+                                <div class="partner-status available">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                    Space Available
+                                </div>
+                            </div>
+
+                            <div class="partner-card">
+                                <div class="partner-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                </div>
+                                <div class="partner-info">
+                                    <span class="partner-name">Valley Logistics Hub</span>
+                                    <span class="partner-distance">28 km</span>
+                                </div>
+                                <div class="partner-status full">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    Near Capacity
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW E: Profile View -->
+                <div class="dashboard-view" id="profile-view">
+                    <!-- Profile main card -->
+                    <div class="profile-card">
+                        <!-- Top header navigation in details profile screenshot (left back, center title, right vertical dots) -->
+                        <div style="width:100%; display:flex; justify-content:space-between; align-items:center; position:absolute; top:20px; left:0; padding:0 24px; box-sizing:border-box;">
+                            <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+                            <span style="font-weight:600; font-size:16px;">Profile</span>
+                            <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+                        </div>
+
+                        <!-- Avatar with verify check -->
+                        <div class="profile-avatar-container" style="margin-top: 24px;">
+                            <img id="profile-user-avatar" src="images/farmer_avatar.png" alt="Rustam Karimov" class="profile-avatar-img">
+                            <div class="profile-verify-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 class="profile-name" id="profile-user-name">Rustam Karimov</h2>
+                            <p class="profile-location" id="profile-user-location">Toshkent viloyati, Qibray</p>
+                        </div>
+
+                        <div>
+                            <!-- Star Rating -->
+                            <div class="rating-badge">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <span>4.8 (124 reviews)</span>
+                            </div>
+                            <div style="display:block; margin-top: 10px;">
+                                <span class="trusted-badge-outline">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                    Ishonchli dehqon
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Stat columns -->
+                        <div class="profile-stats-row">
+                            <div class="profile-stat-card">
+                                <div class="profile-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                                </div>
+                                <span class="profile-stat-num" id="profile-user-deliveries">85</span>
+                                <span class="profile-stat-lbl">Deliveries</span>
+                            </div>
+                            <div class="profile-stat-card">
+                                <div class="profile-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                </div>
+                                <span class="profile-stat-num" id="profile-user-experience">3 Yrs</span>
+                                <span class="profile-stat-lbl">Experience</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Sign Out Button on Mobile profile layout (placed conveniently inside profile view) -->
+                        <button class="btn-primary" id="mobile-signout-btn" style="background-color: var(--danger); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                            <span>Tizimdan Chiqish</span>
+                        </button>
+                    </div>
+
+                    <!-- Verification checks -->
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <h3 class="bozor-title" style="text-align: left;">Verification</h3>
+                        
+                        <div class="verification-list">
+                            <div class="verification-item">
+                                <div class="verification-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2" /><line x1="7" y1="8" x2="17" y2="8" /><line x1="7" y1="12" x2="17" y2="12" /><line x1="7" y1="16" x2="13" y2="16" /></svg>
+                                </div>
+                                <div class="verification-info">
+                                    <span class="verification-name">Identity Document</span>
+                                    <span class="verification-date">Verified on 12/05/2023</span>
+                                </div>
+                                <span class="verification-check-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                </span>
+                            </div>
+
+                            <div class="verification-item">
+                                <div class="verification-icon-box">
+                                    <!-- Tractor SVG small -->
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="17" cy="17" r="3"/><circle cx="6" cy="18" r="2"/><path d="M6 16h6V9H6Z"/><path d="M12 16h4v-5h-4Z"/></svg>
+                                </div>
+                                <div class="verification-info">
+                                    <span class="verification-name">Farming License</span>
+                                    <span class="verification-date">Verified on 15/05/2023</span>
+                                </div>
+                                <span class="verification-check-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Reviews -->
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 class="bozor-title">Recent Reviews</h3>
+                            <a href="#" class="detail-link">See All</a>
+                        </div>
+
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div class="review-avatar-placeholder">A</div>
+                                <div class="review-meta">
+                                    <span class="review-author">Aziz T.</span>
+                                    <span class="review-date">2 days ago</span>
+                                </div>
+                                <!-- 5 Stars -->
+                                <div style="color: #eab308; display:flex; gap: 2px;">
+                                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                </div>
+                            </div>
+                            <p class="review-text" style="text-align: left;">Great quality tomatoes. Arrived on time and exactly as described...</p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Transactions -->
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <h3 class="bozor-title" style="text-align: left;">Recent Transactions</h3>
+                        
+                        <div class="transaction-list">
+                            <!-- Tomato sale -->
+                            <div class="transaction-item">
+                                <img src="images/tomatoes.png" alt="Tomatoes" class="transaction-img">
+                                <div class="transaction-info" style="text-align: left;">
+                                    <span class="transaction-title">Tomatoes (500kg)</span>
+                                    <span class="transaction-dest" style="display: block;">Sold to Market B</span>
+                                </div>
+                                <div class="transaction-status-col">
+                                    <span class="transaction-status">Completed</span>
+                                    <span class="transaction-date" style="display: block;">Oct 12</span>
+                                </div>
+                            </div>
+                            <!-- Potato sale -->
+                            <div class="transaction-item">
+                                <img src="images/potatoes.png" alt="Potatoes" class="transaction-img">
+                                <div class="transaction-info" style="text-align: left;">
+                                    <span class="transaction-title">Potatoes (1000kg)</span>
+                                    <span class="transaction-dest" style="display: block;">Sold to Processing Inc.</span>
+                                </div>
+                                <div class="transaction-status-col">
+                                    <span class="transaction-status">Completed</span>
+                                    <span class="transaction-date" style="display: block;">Oct 05</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- 3. Bottom Tab Bar (Mobile navigation overlay) -->
+        <nav class="mobile-nav-bar">
+            <div class="tab-item active" data-tab="home">
+                <div class="tab-item-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                </div>
+                <span class="tab-item-label">Home</span>
+            </div>
+            <div class="tab-item" data-tab="market">
+                <div class="tab-item-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 0 1-8 0" />
+                    </svg>
+                </div>
+                <span class="tab-item-label">Market</span>
+            </div>
+            <div class="tab-item" data-tab="prices">
+                <div class="tab-item-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10" />
+                        <line x1="12" y1="20" x2="12" y2="4" />
+                        <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                </div>
+                <span class="tab-item-label">Prices</span>
+            </div>
+            <div class="tab-item" data-tab="logistics">
+                <div class="tab-item-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="3" width="15" height="13" rx="2" ry="2" />
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                        <circle cx="5.5" cy="18.5" r="2.5" />
+                        <circle cx="18.5" cy="18.5" r="2.5" />
+                    </svg>
+                </div>
+                <span class="tab-item-label">Logistics</span>
+            </div>
+            <div class="tab-item" data-tab="profile">
+                <div class="tab-item-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </div>
+                <span class="tab-item-label">Profile</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- MODAL 1: Add Crop Product (Home page) -->
+    <div class="modal-overlay" id="add-product-modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="close-add-modal-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <h2 class="modal-title">Yangi ekin qo'shish</h2>
+            <form id="add-product-form" class="form-group">
+                <!-- Crop Type Selection -->
+                <div class="input-wrapper" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                    <label for="modal-crop-select" style="font-size:14px; font-weight:600; color:var(--text-muted);">Ekin turi</label>
+                    <select id="modal-crop-select" class="form-input" style="padding-left: 16px; background-color: var(--bg-input); width: 100%;">
+                        <option value="pomidor">Pomidor (Tomatoes)</option>
+                        <option value="kartoshka">Kartoshka (Potatoes)</option>
+                        <option value="piyoz">Piyoz (Onions)</option>
+                        <option value="sabzi">Sabzi (Carrots)</option>
+                        <option value="olma">Olma (Apples)</option>
+                        <option value="karam">Karam (Cabbage)</option>
+                    </select>
+                </div>
+
+                <!-- Custom crop name (Optional) -->
+                <div class="input-wrapper">
+                    <input type="text" id="modal-crop-name" class="form-input" placeholder="Mahsulot nomi (Masalan: Pomidor Volgograd)" required>
+                    <span class="input-icon">
+                        <!-- Sprout/Leaf icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 8a8.5 8.5 0 0 1-9 10Z"/></svg>
+                    </span>
+                </div>
+
+                <!-- Crop Price -->
+                <div class="input-wrapper">
+                    <input type="number" id="modal-crop-price" class="form-input" placeholder="Narxi (UZS/kg)" required>
+                    <span class="input-icon">
+                        <!-- UZS/Money Icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/></svg>
+                    </span>
+                </div>
+
+                <!-- Crop Quantity -->
+                <div class="input-wrapper">
+                    <input type="number" step="0.1" id="modal-crop-qty" class="form-input" placeholder="Hajmi (Tonna)" required>
+                    <span class="input-icon">
+                        <!-- Weight/Scale Icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 2v9M8 5h8"/></svg>
+                    </span>
+                </div>
+
+                <button type="submit" class="btn-primary" style="margin-top: 12px;">Qo'shish</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Edit Price (Prices page) -->
+    <div class="modal-overlay" id="edit-price-modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="close-price-modal-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <h2 class="modal-title" id="price-modal-title">Narxni tahrirlash</h2>
+            <form id="edit-price-form" class="form-group">
+                <input type="hidden" id="edit-price-crop-id">
+                
+                <div class="input-wrapper" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                    <label style="font-size:14px; font-weight:600; color:var(--text-muted);">Sizning narxingiz (UZS)</label>
+                    <input type="number" id="edit-price-input" class="form-input" placeholder="Narx kiriting" style="padding-left:16px;" required>
+                </div>
+
+                <button type="submit" class="btn-primary" style="margin-top: 12px;">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Core App JS -->
+    <script src="app.js"></script>
+</body>
+</html>
