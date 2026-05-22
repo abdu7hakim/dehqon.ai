@@ -1,0 +1,210 @@
+import { useState } from 'react'
+import { createProduct, deleteProduct, getMyProducts, updateProduct } from '../services/marketplace'
+
+const categories = ['Meva', 'Sabzavot', 'Don mahsulotlari', 'Chorva', 'Parranda', 'Boshqa']
+
+const emptyForm = { name: '', category: '', price: '', quantity: '', description: '' }
+
+export default function MyProducts({ user }) {
+  const [products, setProducts] = useState(() => getMyProducts(user.email))
+  const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState(null)
+  const [form, setForm] = useState(emptyForm)
+  const [errors, setErrors] = useState({})
+
+  const resetForm = () => { setForm(emptyForm); setErrors({}); setEditingId(null); setShowForm(false) }
+
+  const openEdit = (p) => {
+    setForm({ name: p.name, category: p.category, price: String(p.price), quantity: String(p.quantity), description: p.description || '' })
+    setErrors({}); setEditingId(p.id); setShowForm(true)
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setForm(prev => ({ ...prev, [name]: value }))
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
+  }
+
+  const validate = () => {
+    const errs = {}
+    if (!form.name.trim()) errs.name = 'Nomi majburiy'
+    if (!form.category) errs.category = 'Kategoriya tanlang'
+    if (!form.price || isNaN(form.price) || Number(form.price) <= 0) errs.price = 'Noto\'g\'ri narx'
+    if (form.quantity !== '' && (isNaN(form.quantity) || Number(form.quantity) < 0)) errs.quantity = 'Noto\'g\'ri miqdor'
+    return errs
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const errs = validate()
+    if (Object.keys(errs).length) { setErrors(errs); return }
+
+    const data = {
+      name: form.name.trim(),
+      category: form.category,
+      price: Number(form.price),
+      quantity: form.quantity === '' ? 0 : Number(form.quantity),
+      description: form.description,
+    }
+
+    if (editingId) {
+      updateProduct(editingId, data)
+      setProducts(prev => prev.map(p => p.id === editingId ? { ...p, ...data } : p))
+    } else {
+      const newP = createProduct({ ...data, sellerEmail: user.email, sellerName: `${user.firstName} ${user.lastName}` })
+      setProducts(prev => [...prev, newP])
+    }
+    resetForm()
+  }
+
+  const handleDelete = (id) => {
+    deleteProduct(id)
+    setProducts(prev => prev.filter(p => p.id !== id))
+  }
+
+  const inputClass = (name) =>
+    `w-full px-3 py-2.5 border rounded-lg text-sm outline-none transition-all ${
+      errors[name] ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-white focus:border-gray-400 focus:bg-white'
+    }`
+
+  return (
+    <div className="max-w-5xl mx-auto">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-900">Mening mahsulotlarim</h1>
+          <p className="text-sm text-gray-500 mt-1">{products.length} ta mahsulot</p>
+        </div>
+        <button onClick={() => { if (!showForm) resetForm(); setShowForm(!showForm); setEditingId(null) }}
+          className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium rounded-xl transition-all"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+          {showForm ? 'Bekor qilish' : 'Yangi mahsulot'}
+        </button>
+      </div>
+
+      {/* Form */}
+      {showForm && (
+        <form onSubmit={handleSubmit} className="bg-white border border-gray-100 rounded-2xl p-6 mb-8 shadow-sm">
+          <h3 className="text-base font-semibold text-gray-900 mb-5">{editingId ? 'Mahsulotni tahrirlash' : 'Yangi mahsulot qo\'shish'}</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1.5">Mahsulot nomi</label>
+              <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Olma" className={inputClass('name')} />
+              {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1.5">Kategoriya</label>
+              <select name="category" value={form.category} onChange={handleChange} className={inputClass('category')}>
+                <option value="">Tanlang</option>
+                {categories.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+              {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category}</p>}
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1.5">Narxi (so'm)</label>
+              <input type="number" name="price" value={form.price} onChange={handleChange} placeholder="15000" className={inputClass('price')} />
+              {errors.price && <p className="text-red-500 text-xs mt-1">{errors.price}</p>}
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1.5">Soni (kg/dona)</label>
+              <input type="number" name="quantity" value={form.quantity} onChange={handleChange} placeholder="100" className={inputClass('quantity')} />
+              {errors.quantity && <p className="text-red-500 text-xs mt-1">{errors.quantity}</p>}
+            </div>
+          </div>
+          <div className="mb-4">
+            <label className="block text-xs font-medium text-gray-600 mb-1.5">Tavsif</label>
+            <textarea name="description" value={form.description} onChange={handleChange}
+              placeholder="Mahsulot haqida qisqacha..." rows={2} className={inputClass('description')} />
+          </div>
+          <div className="flex gap-3">
+            <button type="submit"
+              className="px-6 py-2.5 bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium rounded-xl transition-all"
+            >{editingId ? 'Saqlash' : 'Qo\'shish'}</button>
+            <button type="button" onClick={resetForm}
+              className="px-6 py-2.5 border border-gray-200 text-gray-600 text-sm font-medium rounded-xl hover:bg-gray-50 transition-all"
+            >Bekor qilish</button>
+          </div>
+        </form>
+      )}
+
+      {/* Products */}
+      {products.length === 0 && !showForm ? (
+        <div className="text-center py-24">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-50 flex items-center justify-center">
+            <svg className="w-7 h-7 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M8.25 8.25l3-3 3 3m-3-3v12" />
+            </svg>
+          </div>
+          <p className="text-base font-medium text-gray-900">Hali mahsulot yo'q</p>
+          <p className="text-sm text-gray-400 mt-1">Yangi mahsulot qo'shish uchun yuqoridagi tugmani bosing</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {products.map(p => {
+            const outOfStock = p.quantity === 0
+            return (
+              <div key={p.id} className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-sm transition-all">
+                {/* Image placeholder */}
+                <div className={`h-36 rounded-xl mb-4 flex items-center justify-center ${outOfStock ? 'bg-gray-50' : 'bg-emerald-50'}`}>
+                  {outOfStock ? (
+                    <svg className="w-10 h-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+                  ) : (
+                    <svg className="w-10 h-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                    </svg>
+                  )}
+                </div>
+
+                {/* Info */}
+                <div className="flex items-start justify-between mb-2">
+                  <div>
+                    <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${outOfStock ? 'bg-red-50 text-red-500' : 'bg-emerald-50 text-emerald-600'}`}>
+                      {p.category}
+                    </span>
+                    <h3 className="text-sm font-semibold text-gray-900 mt-2">{p.name}</h3>
+                  </div>
+                  {/* Status */}
+                  {outOfStock && (
+                    <span className="text-[11px] font-medium text-red-500 bg-red-50 px-2 py-0.5 rounded-full whitespace-nowrap">
+                      Tugagan
+                    </span>
+                  )}
+                </div>
+
+                {p.description && <p className="text-xs text-gray-400 mb-3 line-clamp-2">{p.description}</p>}
+
+                <div className="flex items-end justify-between mt-auto">
+                  <div>
+                    <p className="text-lg font-bold text-gray-900">{Number(p.price).toLocaleString()} so'm</p>
+                    <p className={`text-xs mt-0.5 ${outOfStock ? 'text-red-400' : 'text-gray-400'}`}>
+                      {p.quantity} {p.quantity === 1 ? 'dona' : 'dona'} qoldi
+                    </p>
+                  </div>
+                  <div className="flex gap-1">
+                    <button onClick={() => openEdit(p)}
+                      className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-all">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                      </svg>
+                    </button>
+                    <button onClick={() => handleDelete(p.id)}
+                      className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
