@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { createProduct, deleteProduct, getMyProducts, updateProduct } from '../services/marketplace'
 
 const categories = ['Meva', 'Sabzavot', 'Don mahsulotlari', 'Chorva', 'Parranda', 'Boshqa']
 
-const emptyForm = { name: '', category: '', price: '', quantity: '', description: '' }
+const emptyForm = { name: '', category: '', price: '', quantity: '', description: '', image: '' }
 
 export default function MyProducts({ user }) {
   const [products, setProducts] = useState(() => getMyProducts(user.email))
@@ -11,11 +11,17 @@ export default function MyProducts({ user }) {
   const [editingId, setEditingId] = useState(null)
   const [form, setForm] = useState(emptyForm)
   const [errors, setErrors] = useState({})
+  const [imagePreview, setImagePreview] = useState(null)
+  const fileRef = useRef(null)
 
-  const resetForm = () => { setForm(emptyForm); setErrors({}); setEditingId(null); setShowForm(false) }
+  const resetForm = () => { setForm(emptyForm); setErrors({}); setEditingId(null); setShowForm(false); setImagePreview(null) }
 
   const openEdit = (p) => {
-    setForm({ name: p.name, category: p.category, price: String(p.price), quantity: String(p.quantity), description: p.description || '' })
+    setForm({
+      name: p.name, category: p.category, price: String(p.price),
+      quantity: String(p.quantity), description: p.description || '', image: p.image || '',
+    })
+    setImagePreview(p.image || null)
     setErrors({}); setEditingId(p.id); setShowForm(true)
   }
 
@@ -23,6 +29,23 @@ export default function MyProducts({ user }) {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
+  }
+
+  const handleImage = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => {
+      setImagePreview(reader.result)
+      setForm(prev => ({ ...prev, image: reader.result }))
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const removeImage = () => {
+    setImagePreview(null)
+    setForm(prev => ({ ...prev, image: '' }))
+    if (fileRef.current) fileRef.current.value = ''
   }
 
   const validate = () => {
@@ -40,11 +63,9 @@ export default function MyProducts({ user }) {
     if (Object.keys(errs).length) { setErrors(errs); return }
 
     const data = {
-      name: form.name.trim(),
-      category: form.category,
-      price: Number(form.price),
+      name: form.name.trim(), category: form.category, price: Number(form.price),
       quantity: form.quantity === '' ? 0 : Number(form.quantity),
-      description: form.description,
+      description: form.description, image: form.image,
     }
 
     if (editingId) {
@@ -69,7 +90,6 @@ export default function MyProducts({ user }) {
 
   return (
     <div className="max-w-5xl mx-auto">
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">Mening mahsulotlarim</h1>
@@ -89,6 +109,34 @@ export default function MyProducts({ user }) {
       {showForm && (
         <form onSubmit={handleSubmit} className="bg-white border border-gray-100 rounded-2xl p-6 mb-8 shadow-sm">
           <h3 className="text-base font-semibold text-gray-900 mb-5">{editingId ? 'Mahsulotni tahrirlash' : 'Yangi mahsulot qo\'shish'}</h3>
+
+          {/* Image upload */}
+          <div className="mb-5">
+            <label className="block text-xs font-medium text-gray-600 mb-1.5">Mahsulot rasmi</label>
+            <div className="flex items-center gap-4">
+              <div className={`w-24 h-24 rounded-xl border-2 border-dashed flex items-center justify-center overflow-hidden ${imagePreview ? 'border-emerald-200' : 'border-gray-200'}`}>
+                {imagePreview ? (
+                  <img src={imagePreview} alt="preview" className="w-full h-full object-cover" />
+                ) : (
+                  <svg className="w-8 h-8 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                  </svg>
+                )}
+              </div>
+              <div className="flex flex-col gap-2">
+                <input ref={fileRef} type="file" accept="image/*" onChange={handleImage} className="hidden" id="productImage" />
+                <label htmlFor="productImage"
+                  className="px-4 py-2 border border-gray-200 rounded-xl text-xs font-medium text-gray-600 hover:bg-gray-50 cursor-pointer transition-all text-center"
+                >Rasm tanlash</label>
+                {imagePreview && (
+                  <button type="button" onClick={removeImage}
+                    className="text-xs text-red-500 hover:text-red-600 text-center"
+                  >O'chirish</button>
+                )}
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             <div>
               <label className="block text-xs font-medium text-gray-600 mb-1.5">Mahsulot nomi</label>
@@ -146,10 +194,12 @@ export default function MyProducts({ user }) {
           {products.map(p => {
             const outOfStock = p.quantity === 0
             return (
-              <div key={p.id} className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-sm transition-all">
-                {/* Image placeholder */}
-                <div className={`h-36 rounded-xl mb-4 flex items-center justify-center ${outOfStock ? 'bg-gray-50' : 'bg-emerald-50'}`}>
-                  {outOfStock ? (
+              <div key={p.id} className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-sm transition-all flex flex-col">
+                {/* Image */}
+                <div className={`h-40 flex items-center justify-center ${p.image ? '' : outOfStock ? 'bg-gray-50' : 'bg-emerald-50'} overflow-hidden`}>
+                  {p.image ? (
+                    <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                  ) : outOfStock ? (
                     <svg className="w-10 h-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                     </svg>
@@ -160,44 +210,42 @@ export default function MyProducts({ user }) {
                   )}
                 </div>
 
-                {/* Info */}
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${outOfStock ? 'bg-red-50 text-red-500' : 'bg-emerald-50 text-emerald-600'}`}>
-                      {p.category}
-                    </span>
-                    <h3 className="text-sm font-semibold text-gray-900 mt-2">{p.name}</h3>
+                <div className="p-4 flex flex-col flex-1">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${outOfStock ? 'bg-red-50 text-red-500' : 'bg-emerald-50 text-emerald-600'}`}>
+                        {p.category}
+                      </span>
+                      <h3 className="text-sm font-semibold text-gray-900 mt-2">{p.name}</h3>
+                    </div>
+                    {outOfStock && (
+                      <span className="text-[11px] font-medium text-red-500 bg-red-50 px-2 py-0.5 rounded-full whitespace-nowrap">Tugagan</span>
+                    )}
                   </div>
-                  {/* Status */}
-                  {outOfStock && (
-                    <span className="text-[11px] font-medium text-red-500 bg-red-50 px-2 py-0.5 rounded-full whitespace-nowrap">
-                      Tugagan
-                    </span>
-                  )}
-                </div>
 
-                {p.description && <p className="text-xs text-gray-400 mb-3 line-clamp-2">{p.description}</p>}
+                  {p.description && <p className="text-xs text-gray-400 mb-3 line-clamp-2">{p.description}</p>}
 
-                <div className="flex items-end justify-between mt-auto">
-                  <div>
-                    <p className="text-lg font-bold text-gray-900">{Number(p.price).toLocaleString()} so'm</p>
-                    <p className={`text-xs mt-0.5 ${outOfStock ? 'text-red-400' : 'text-gray-400'}`}>
-                      {p.quantity} {p.quantity === 1 ? 'dona' : 'dona'} qoldi
-                    </p>
-                  </div>
-                  <div className="flex gap-1">
-                    <button onClick={() => openEdit(p)}
-                      className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-all">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                      </svg>
-                    </button>
-                    <button onClick={() => handleDelete(p.id)}
-                      className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                      </svg>
-                    </button>
+                  <div className="flex items-end justify-between mt-auto pt-3 border-t border-gray-50">
+                    <div>
+                      <p className="text-lg font-bold text-gray-900">{Number(p.price).toLocaleString()} so'm</p>
+                      <p className={`text-xs mt-0.5 ${outOfStock ? 'text-red-400' : 'text-gray-400'}`}>
+                        {p.quantity} dona qoldi
+                      </p>
+                    </div>
+                    <div className="flex gap-1">
+                      <button onClick={() => openEdit(p)}
+                        className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-all">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                        </svg>
+                      </button>
+                      <button onClick={() => handleDelete(p.id)}
+                        className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

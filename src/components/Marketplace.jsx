@@ -62,8 +62,10 @@ export default function Marketplace({ user, onCartUpdate }) {
             return (
               <div key={p.id} className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-sm transition-all flex flex-col">
                 {/* Image */}
-                <div className={`h-44 flex items-center justify-center ${outOfStock ? 'bg-gray-50' : 'bg-emerald-50'}`}>
-                  {outOfStock ? (
+                <div className={`h-44 flex items-center justify-center overflow-hidden ${p.image ? '' : outOfStock ? 'bg-gray-50' : 'bg-emerald-50'}`}>
+                  {p.image ? (
+                    <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                  ) : outOfStock ? (
                     <div className="text-center">
                       <svg className="w-12 h-12 mx-auto text-gray-300 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />

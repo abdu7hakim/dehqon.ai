@@ -1,14 +1,14 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 export default function Header({ user, navPages, currentPage, onNavigate, cartCount, onCartClick, onProfileClick }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false)
+  const containerRef = useRef(null)
   const isSeller = user.role === 'sotuvchi'
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <button onClick={() => onNavigate(isSeller ? 'products' : 'marketplace')}
             className="flex items-center gap-2 shrink-0"
           >
@@ -20,7 +20,6 @@ export default function Header({ user, navPages, currentPage, onNavigate, cartCo
             <span className="text-lg font-bold text-gray-900 hidden sm:block">Dehqon AI</span>
           </button>
 
-          {/* Nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navPages.map(p => (
               <button key={p.id} onClick={() => onNavigate(p.id)}
@@ -33,9 +32,7 @@ export default function Header({ user, navPages, currentPage, onNavigate, cartCo
             ))}
           </nav>
 
-          {/* Right */}
           <div className="flex items-center gap-2">
-            {/* Cart - only haridor */}
             {!isSeller && (
               <button onClick={onCartClick}
                 className="relative p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-all"
@@ -51,17 +48,16 @@ export default function Header({ user, navPages, currentPage, onNavigate, cartCo
               </button>
             )}
 
-            {/* Notification */}
             <button className="p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-all">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
               </svg>
             </button>
 
-            {/* Profile */}
-            <div className="relative">
+            <div className="relative" ref={containerRef}
+              onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setShowProfileMenu(false) }}
+            >
               <button onClick={() => setShowProfileMenu(!showProfileMenu)}
-                onBlur={() => setTimeout(() => setShowProfileMenu(false), 150)}
                 className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-100 transition-all"
               >
                 <div className="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white text-sm font-semibold">
@@ -77,7 +73,8 @@ export default function Header({ user, navPages, currentPage, onNavigate, cartCo
                       {user.role === 'sotuvchi' ? 'Sotuvchi' : 'Haridor'}
                     </span>
                   </div>
-                  <button onClick={() => { setShowProfileMenu(false); onProfileClick() }}
+                  <button
+                    onMouseDown={() => { setShowProfileMenu(false); onProfileClick() }}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

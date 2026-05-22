@@ -4,16 +4,21 @@ import Marketplace from './Marketplace'
 import MyProducts from './MyProducts'
 import Cart from './Cart'
 import Profile from './Profile'
+import AIAnalysis from './AIAnalysis'
+import Logistics from './Logistics'
 import { getCart } from '../services/marketplace'
 
 const sellerPages = [
   { id: 'products', label: 'Mening mahsulotlarim' },
+  { id: 'logistics', label: 'Logistika' },
+  { id: 'ai', label: 'AI Tahlil' },
   { id: 'profile', label: 'Profil' },
 ]
 
 const buyerPages = [
   { id: 'marketplace', label: 'Marketplace' },
-  { id: 'cart', label: 'Savat' },
+  { id: 'logistics', label: 'Logistika' },
+  { id: 'ai', label: 'AI Tahlil' },
   { id: 'profile', label: 'Profil' },
 ]
 
@@ -34,6 +39,8 @@ export default function Home({ user, onLogout }) {
       case 'products': return <MyProducts user={user} />
       case 'cart': return <Cart user={user} onCartUpdate={refreshCart} />
       case 'profile': return <Profile user={user} onLogout={onLogout} />
+      case 'ai': return <AIAnalysis />
+      case 'logistics': return <Logistics user={user} />
       default: return null
     }
   }
