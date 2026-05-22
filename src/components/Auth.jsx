@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { register, login } from '../services/auth'
+import logo from '../assets/logo-white.png'
 
 const roles = [
   {
@@ -88,7 +89,7 @@ export default function Auth({ onAuth }) {
             <div className="absolute -bottom-10 -left-10 w-48 h-48 rounded-full bg-white" />
           </div>
           <div className="relative z-10">
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">Dehqon AI</h1>
+            <img src={logo} alt="Dehqon AI" className="h-32 w-auto object-contain mb-4 drop-shadow-lg" />
             <p className="text-emerald-100 text-sm md:text-base">Qishloq xo'jaligini raqamlashtirish</p>
           </div>
           <div className="relative z-10 space-y-4 mt-8">
